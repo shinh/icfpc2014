@@ -1,0 +1,224 @@
+mov [60],0
+mov [70],0
+mov [74],255
+mov [71],1
+mov [75],0
+mov [72],0
+mov [76],1
+mov [73],255
+mov [77],0
+int 3
+int 5
+mov [40],a
+mov [41],b
+int 1
+mov [50],a
+mov [51],b
+jgt 20,[40],[50] ; @calc_dist gx_is_larger
+mov d,[50]
+sub d,[40]
+jeq 22,0,0 ; x_compare_done
+mov d,[40] ; @gx_is_larger
+sub d,[50]
+mov [55],d ; @x_compare_done
+jgt 27,[41],[51] ; gy_is_larger
+mov d,[51]
+sub d,[41]
+jeq 29,0,0 ; y_compare_done
+mov d,[41] ; @gy_is_larger
+sub d,[51]
+add [55],d ; @y_compare_done
+jgt 40,d,3 ; @predict predict_done
+jeq 40,[90],0 ; predict_done
+mov c,[50]
+sub c,[90]
+mul c,1
+mov d,[51]
+sub d,[91]
+mul d,1
+add [50],c
+add [51],d
+mov [90],a ; @predict_done
+mov [91],b
+int 3
+jlt 75,[51],[41] ; neg_dy
+jgt 60,[50],[40] ; pos_dy_pos_dx
+mov a,[40]
+sub a,[50]
+mov b,[51]
+sub b,[41]
+jlt 55,b,a ; pos_dy_neg_dx_x
+mov [20],2
+mov [21],3
+mov [22],1
+mov [23],0
+jeq 106,0,0 ; got_priority
+mov [20],3 ; @pos_dy_neg_dx_x
+mov [21],2
+mov [22],0
+mov [23],1
+jeq 106,0,0 ; got_priority
+mov a,[50] ; @pos_dy_pos_dx
+sub a,[40]
+mov b,[51]
+sub b,[41]
+jlt 70,b,a ; pos_dy_pos_dx_x
+mov [20],2
+mov [21],1
+mov [22],3
+mov [23],0
+jeq 106,0,0 ; got_priority
+mov [20],1 ; @pos_dy_pos_dx_x
+mov [21],2
+mov [22],0
+mov [23],3
+jeq 106,0,0 ; got_priority
+jgt 91,[50],[40] ; @neg_dy neg_dy_pos_dx
+mov a,[40]
+sub a,[50]
+mov b,[41]
+sub b,[51]
+jlt 86,a,b ; neg_dy_neg_dx_y
+mov [20],3
+mov [21],0
+mov [22],2
+mov [23],1
+jeq 106,0,0 ; got_priority
+mov [20],0 ; @neg_dy_neg_dx_y
+mov [21],3
+mov [22],1
+mov [23],2
+jeq 106,0,0 ; got_priority
+mov a,[50] ; @neg_dy_pos_dx
+sub a,[40]
+mov b,[41]
+sub b,[51]
+jlt 101,a,b ; neg_dy_pos_dx_y
+mov [20],1
+mov [21],0
+mov [22],2
+mov [23],3
+jeq 106,0,0 ; got_priority
+mov [20],0 ; @neg_dy_pos_dx_y
+mov [21],1
+mov [22],3
+mov [23],2
+jeq 106,0,0 ; got_priority
+mov [57],252 ; @search_ppill
+mov b,[57] ; @search_ppill_y_loop
+add b,[51]
+mov [56],252
+mov a,[56] ; @search_ppill_x_loop
+add a,[50]
+int 7
+jeq 124,a,3 ; reverse
+add [56],1
+jeq 117,[56],5 ; search_ppill_x_loop_done
+jeq 110,0,0 ; search_ppill_x_loop
+add [57],1 ; @search_ppill_x_loop_done
+jeq 120,[57],5 ; search_ppill_done
+jeq 107,0,0 ; search_ppill_y_loop
+int 3 ; @search_ppill_done
+int 6
+and a,1
+jeq 132,a,0 ; shuffle
+jgt 132,[55],10 ; @reverse shuffle
+mov [60],1
+mov a,[20]
+mov [20],[23]
+mov [23],a
+mov a,[21]
+mov [21],[22]
+mov [22],a
+int 3 ; @shuffle
+add [80],a
+add [80],7
+mul [80],13
+jeq 152,[60],1 ; shuffle_done
+jlt 152,[55],2 ; shuffle_done
+jgt 152,[80],10 ; shuffle_done
+int 8
+add [81],a
+add [81],37
+mul [81],97
+mov a,[80]
+mov b,[81]
+div a,64
+div b,64
+add a,20
+add b,20
+mov c,[a]
+mov [a],[b]
+mov [b],c
+mov d,[20] ; @shuffle_done
+int 3
+int 6
+add b,2
+and b,3
+jeq 167,b,d ; invalid_0
+mov a,[40]
+mov c,70
+add c,d
+add a,[c]
+mov b,[41]
+add c,4
+add b,[c]
+int 7
+jgt 212,a,0 ; done
+mov d,[21] ; @invalid_0
+int 3
+int 6
+add b,2
+and b,3
+jeq 182,b,d ; invalid_1
+mov a,[40]
+mov c,70
+add c,d
+add a,[c]
+mov b,[41]
+add c,4
+add b,[c]
+int 7
+jgt 212,a,0 ; done
+mov d,[22] ; @invalid_1
+int 3
+int 6
+add b,2
+and b,3
+jeq 197,b,d ; invalid_2
+mov a,[40]
+mov c,70
+add c,d
+add a,[c]
+mov b,[41]
+add c,4
+add b,[c]
+int 7
+jgt 212,a,0 ; done
+mov d,[23] ; @invalid_2
+int 3
+int 6
+add b,2
+and b,3
+jeq 212,b,d ; invalid_3
+mov a,[40]
+mov c,70
+add c,d
+add a,[c]
+mov b,[41]
+add c,4
+add b,[c]
+int 7
+jgt 212,a,0 ; done
+mov a,d ; @done
+int 0
+mov g,230
+sub [g],[253] ; @loop
+add g,1
+mul [g],[3]
+add a,[g]
+mul [g],[7]
+add b,[g]
+int 7
+jlt 215,g,250 ; loop
+hlt 

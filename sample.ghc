@@ -1,0 +1,21 @@
+mov a,255
+mov b,0    
+mov c,255  
+inc c
+jgt 7,[c],a
+mov a,[c]  
+mov b,c    
+jlt 3,c,3  
+mov a,b    
+mov d,a
+int 0
+
+int 3      
+int 6      
+inc [b]
+;mov e,[0]
+;mov f,[1]
+;mov g,[2]
+;mov h,[3]
+;int 8
+hlt

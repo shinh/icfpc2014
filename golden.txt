@@ -1,0 +1,3 @@
+Score: 1360 Lives: 2 Ticks: 20102
+Score: 1320 Lives: 3 Ticks: 18992
+Score: 2000 Lives: 3 Ticks: 46535

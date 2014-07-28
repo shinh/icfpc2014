@@ -1,0 +1,41 @@
+Team name: shinh7
+Member: Shinichiro Hamaji
+
+* ai.rb and dsl.rb
+
+A Lambda-man DSL, implemented in Ruby. It does:
+
+- breadth first search for region close to lambdaman
+- calculate score for each direction based on the location of pills
+- wait ghost next to a power pill
+- try not to go in a straight path where a ghost is coming
+- try not to be too close to a ghost
+- handle extreme maps (too big map, too many pills, etc.)
+- prefer fruits
+- etc.
+
+* lman.rb and gen_lman_inst.rb
+
+The backend assembler of the lambdaman AI.
+
+* akabei.rb, ghost.rb, and gen_ghost_inst.rb
+
+The ghost AI and its assembler. "Akabei" is named after blinky.
+
+- Go to the location of lambdaman (or the location to which lambdaman
+  is going, if you pass a parameter)
+- When frighten or lambdaman is close to a power pill, it will go to
+  the opposite direction.
+- A small randomization.
+
+* sim.go
+
+A game simulator written in Go. It was fairly compatible with the
+reference implementation until the timing of this was fixed :(
+
+https://github.com/icfpcontest2014/icfpcontest2014.github.io/commit/12fc72d6082820c2035f1da28dd9dd718fb3db77
+
+* My environment
+
+My ruby version is "ruby 2.1.2p95 (2014-05-08) [x86_64-linux-gnu]"
+My go version is "go version go1.3 linux/amd64"
